@@ -6,17 +6,20 @@ import 'package:flutter/material.dart';
 class NewsProvider with ChangeNotifier {
   bool isLoading = true;
   TopNewsModel? resNews;
-  getTopNews() async {
-    final res = await api(
-        '${baseUrl}top-headlines?country=us&pageSize=100&apiKey=$API_KEY');
 
-    if (res.statusCode == 200) {
-      resNews = TopNewsModel.fromJson(res.data);
-    } else {
-      resNews = TopNewsModel();
+  Future<void> getTopNews() async {
+    try {
+      final res = await api(
+          '${baseUrl}top-headlines?country=us&pageSize=100&apiKey=$API_KEY');
+
+      if (res.statusCode == 200) {
+        resNews = TopNewsModel.fromJson(res.data);
+      } else {
+        throw Exception('Failed to load news: ${res.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to load news: $e');
     }
-
-    // MENCOBA BUAT KE FLUTTER BARU
 
     isLoading = false;
     notifyListeners();

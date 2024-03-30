@@ -1,6 +1,7 @@
 import 'package:NewsApp/models/topNews.model.dart';
 import 'package:NewsApp/pages/articles_details_page.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 Widget customListTile(Articles article, BuildContext context) {
   return InkWell(
@@ -36,7 +37,8 @@ Widget customListTile(Articles article, BuildContext context) {
             width: double.infinity,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage(article.urlToImage ?? ''),
+                image: NetworkImage(article.urlToImage ??
+                    'https://via.placeholder.com/750x500.jpeg?text=Image+Error'),
                 fit: BoxFit.cover,
               ),
               borderRadius: BorderRadius.circular(12.0),
@@ -45,23 +47,36 @@ Widget customListTile(Articles article, BuildContext context) {
           SizedBox(height: 8.0),
           Container(
             padding: EdgeInsets.all(6.0),
-            decoration: BoxDecoration(
-              color: Colors.red,
-              borderRadius: BorderRadius.circular(30.0),
-            ),
             child: Text(
-              article.source?.name ?? 'Unknown', // Handling null here
+              article.title ?? 'No Title', // Handling null here
               style: TextStyle(
-                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 16.0,
               ),
             ),
           ),
           SizedBox(height: 8.0),
-          Text(
-            article.title ?? 'No Title', // Handling null here
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16.0,
+          Container(
+            padding: EdgeInsets.all(6.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  article.source?.name ?? 'Unknown',
+                  style: TextStyle(
+                    color: Colors.blue,
+                  ),
+                ),
+                Text(
+                  article.publishedAt != null
+                      ? DateFormat('dd MMMM yyyy')
+                          .format(DateTime.parse(article.publishedAt!))
+                      : 'Unknown',
+                  style: TextStyle(
+                    color: Colors.blue,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
