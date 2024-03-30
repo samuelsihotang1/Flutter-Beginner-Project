@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class ArticlePage extends StatelessWidget {
   final Article article;
 
-  ArticlePage({required this.article});
+  ArticlePage({this.article});
 
   @override
   Widget build(BuildContext context) {

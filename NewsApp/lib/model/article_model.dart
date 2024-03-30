@@ -16,14 +16,14 @@ class Article {
 
   //Now let's create the constructor
   Article(
-      {required this.source,
-      required this.author,
-      required this.title,
-      required this.description,
-      required this.url,
-      required this.urlToImage,
-      required this.publishedAt,
-      required this.content});
+      {this.source,
+      this.author,
+      this.title,
+      this.description,
+      this.url,
+      this.urlToImage,
+      this.publishedAt,
+      this.content});
 
   //And now let's create the function that will map the json into a list
   factory Article.fromJson(Map<String, dynamic> json) {
