@@ -48,7 +48,7 @@ Widget customListTile(Articles article, BuildContext context) {
           Container(
             padding: EdgeInsets.all(6.0),
             child: Text(
-              article.title ?? 'No Title', // Handling null here
+              article.title ?? 'No Title',  
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16.0,

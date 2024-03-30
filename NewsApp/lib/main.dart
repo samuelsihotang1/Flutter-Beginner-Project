@@ -1,3 +1,4 @@
+import 'package:NewsApp/components/everythingList.dart';
 import 'package:NewsApp/models/topNews.model.dart';
 import 'package:NewsApp/providers/news.provider.dart';
 import 'package:flutter/material.dart';
@@ -60,24 +61,48 @@ class _HomePageState extends State<HomePage> {
           } else if (newsProvider.resNews != null) {
             List<Articles>? articles = newsProvider.resNews!.articles!;
             return Column(
-              crossAxisAlignment: CrossAxisAlignment
-                  .start, // Mengatur teks menjadi rata kiri secara vertical
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: 16.0), // Tambahkan padding horizontal
-                  child: Text(
-                    'Berita Terkini',
-                    textAlign: TextAlign
-                        .start, // Mengatur teks "jawa" menjadi rata kiri
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
                 Expanded(
                   child: ListView.builder(
                     itemCount: articles.length,
-                    itemBuilder: (context, index) =>
-                        customListTile(articles[index], context),
+                    itemBuilder: (context, index) {
+                      if (index == 0) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Text(
+                                'Berita Terkini',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ),
+                            customListTile(articles[index], context),
+                          ],
+                        );
+                      } else {
+                        if (index == 1) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                                child: Text(
+                                  'Semua Berita',
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              ),
+                              everythingListTile(articles[index], context),
+                            ],
+                          );
+                        } else {
+                          return everythingListTile(articles[index], context);
+                        }
+                      }
+                    },
                   ),
                 ),
               ],
