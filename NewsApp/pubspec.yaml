@@ -35,8 +35,9 @@ dev_dependencies:
     flutter_test:
         sdk: flutter
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
+    # For information on the generic Dart part of this file, see the
+    # following page: https://dart.dev/tools/pub/pubspec
+    flutter_lints: ^3.0.0
 
 # The following section is specific to Flutter.
 flutter:

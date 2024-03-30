@@ -16,11 +16,9 @@ class NewsProvider with ChangeNotifier {
       resNews = TopNewsModel();
     }
 
+    // MENCOBA BUAT KE FLUTTER BARU
+
     isLoading = false;
     notifyListeners();
-  }
-
-  TopNewsModel? getResNews() {
-    return resNews;
   }
 }

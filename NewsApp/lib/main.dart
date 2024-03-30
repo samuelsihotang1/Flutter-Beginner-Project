@@ -1,30 +1,27 @@
-import 'package:NewsApp/services/api_service.dart';
+import 'package:NewsApp/models/topNews.model.dart';
+import 'package:NewsApp/providers/news.provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'components/customListTile.dart';
-import 'model/article_model.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomePage(),
+    return ChangeNotifierProvider<NewsProvider>(
+      create: (context) => NewsProvider(), // Provide NewsProvider here
+      child: MaterialApp(
+        home: HomePage(),
+      ),
     );
   }
 }
 
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  ApiService client = ApiService();
-
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,25 +29,21 @@ class _HomePageState extends State<HomePage> {
         title: Text("News App", style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.white,
       ),
-
-      //Now let's call the APi services with futurebuilder wiget
-      body: FutureBuilder<List<Article>>(
-        future: client.getArticle(),
-        builder: (BuildContext context, AsyncSnapshot<List<Article>?> snapshot) {
-          //let's check if we got a response or not
-          if (snapshot.hasData && snapshot.data != null) {
-            //Now let's make a list of articles
-            List<Article> articles = snapshot.data!;
+      body: Consumer<NewsProvider>(
+        builder: (context, newsProvider, child) {
+          if (newsProvider.isLoading) {
+            // return Center(child: CircularProgressIndicator());
+            return Center(child: Text(newsProvider.resNews.toString()));
+          } else if (newsProvider.resNews != null) {
+            List<Articles>? articles = newsProvider.resNews!.articles!;
             return ListView.builder(
-              //Now let's create our custom List tile
               itemCount: articles.length,
               itemBuilder: (context, index) =>
                   customListTile(articles[index], context),
             );
+          } else {
+            return Center(child: Text("Failed to load news"));
           }
-          return Center(
-            child: CircularProgressIndicator(),
-          );
         },
       ),
     );
