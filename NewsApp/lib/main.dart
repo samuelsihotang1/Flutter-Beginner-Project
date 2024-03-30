@@ -34,13 +34,13 @@ class _HomePageState extends State<HomePage> {
       ),
 
       //Now let's call the APi services with futurebuilder wiget
-      body: FutureBuilder(
+      body: FutureBuilder<List<Article>>(
         future: client.getArticle(),
-        builder: (BuildContext context, AsyncSnapshot<List<Article>> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<List<Article>?> snapshot) {
           //let's check if we got a response or not
-          if (snapshot.hasData) {
+          if (snapshot.hasData && snapshot.data != null) {
             //Now let's make a list of articles
-            List<Article> articles = snapshot.data;
+            List<Article> articles = snapshot.data!;
             return ListView.builder(
               //Now let's create our custom List tile
               itemCount: articles.length,
